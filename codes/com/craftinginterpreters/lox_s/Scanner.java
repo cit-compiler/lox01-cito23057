@@ -1,11 +1,11 @@
-package com.craftinginterpreters.lox;
+package com.craftinginterpreters.lox_s;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static com.craftinginterpreters.lox.TokenType.*;
+import static com.craftinginterpreters.lox_s.TokenType.*;
 
 public class Scanner {
     private final String source;
@@ -94,7 +94,10 @@ public class Scanner {
             case '\n':
                 line++;
                 break;
-            case '"': string(); break;
+            case '"': 
+                string(); 
+                break;    
+            case '\'': string(); break;
             default:
                 if (isDigit(c)) {
                     number();
@@ -128,7 +131,8 @@ public class Scanner {
         addToken(NUMBER,Double.parseDouble(source.substring(start, current)));
     }
     private void string() {
-        while (peek() != '"' && !isAtEnd()) {
+        char a = source.charAt(start);
+        while (peek() != a && !isAtEnd()) {
             if (peek() == '\n') line++;
             advance();
         }
